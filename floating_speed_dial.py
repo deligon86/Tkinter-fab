@@ -1,9 +1,8 @@
-from threading import Thread
-from tkinter import Label, Button, Tk, PhotoImage 
-from assetloader import Load
+from tkinter import Label, Button, Tk, PhotoImage
 import time
+from threading import Thread
 from PIL import Image, ImageTk
-
+from assestloader import Load
 from coloring import PilDetector
 from hovering import FABHover
 
