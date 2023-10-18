@@ -46,15 +46,13 @@ class PilDetector:
     
     def _find_color(self, colors, tr=2):
         items = len(colors)
-        if tr % 2 == 0:
-            factor = items // tr
-            first_half = colors[:factor]
-            sec_half = colors[factor:]
-            color = random.choice([first_half[-1], sec_half[0]])
-            count, color = color
-        elif tr % 3 == 0:
-            factor = items // tr
-            count, color = colors[factor]
+        if tr > 10:
+            print(f"Threshold {tr} exceed maximum threshold of 10")
+            tr = 10
+
+        factor = (tr * items) // 10 # use on a scale of 1-10 threshold
+
+        count color = colors[factor]
 
         return color
 
