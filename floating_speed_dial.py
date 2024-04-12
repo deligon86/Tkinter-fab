@@ -25,7 +25,7 @@ class FloatingSpeedDial(Button):
 
     """
     def __init__(self, parent:Tk, data:dict, animate=False, icon=None, icon_size=55, open_duration=0.001, anim_duration=0.01,
-                    on_release=None):
+                    on_release=None, rotate_icon=False):
         self.parent = parent
         self.data = data
         self.animate = animate
@@ -33,6 +33,7 @@ class FloatingSpeedDial(Button):
         self.open_duration = open_duration
         self.anim_duration = anim_duration
         self.on_release = on_release
+        self.rotate_icon = rotate_icon
 
         # get the actual app size
         self.parent.update()
@@ -56,7 +57,7 @@ class FloatingSpeedDial(Button):
 
     def pack_data(self):
         """display the buttons"""
-        if self.open is False:
+        if not self.open:
             x, y = self.winfo_x(), self.winfo_y() # get the position of main floating action button
             count = 0
             for key, var in self.data.items():
@@ -79,7 +80,7 @@ class FloatingSpeedDial(Button):
 
             self.close_icon_ = self.generate_closure_icon(self.plus_icon)
             self.configure(image=self.close_icon_)
-            if self.animate is True:
+            if self.animate:
                 for wigd in self.widgets:
                     FABHover(widget=wigd, parent=self.parent, color=self.icon_bg_color, anim_duration=self.anim_duration)
 
@@ -97,8 +98,9 @@ class FloatingSpeedDial(Button):
         """this rotates the plus icon 45%"""
         image = Image.open(icon)
         image = image.resize(size=(self.icon_size,self.icon_size), resample=Image.ANTIALIAS)
-        rotated = image.rotate(45)
-        return ImageTk.PhotoImage(rotated)
+        if self.rotate_icon:
+            image = image.rotate(45)
+        return ImageTk.PhotoImage(image)
 
     # process icons
     def process_icons(self, icon) -> PhotoImage:
